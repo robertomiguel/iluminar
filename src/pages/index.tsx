@@ -1,3 +1,4 @@
+import Head from 'next/head'
 import React from 'react'
 
 export default function Home() {
@@ -14,6 +15,11 @@ export default function Home() {
   }
 
   return (
+    <>
+      <Head>
+        <title>Foto Arte</title>
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+      </Head>
     <div style={{
       background: rgb,
       position: 'absolute',
@@ -28,6 +34,7 @@ export default function Home() {
         display: 'flex',
         flexDirection: 'row',
         justifyContent: 'space-between',
+        alignItems: 'center',
       }} >
         <div style={{
             display: 'flex',
@@ -52,8 +59,8 @@ export default function Home() {
             alignItems: 'center',
             background: 'blue',
             color: 'white',
-            width: '100px',
-            height: '100px',
+            width: '80px',
+            height: '80px',
             cursor: 'pointer',
             borderRadius: '50px'}} onClick={ e => {
           e.preventDefault()
@@ -101,5 +108,5 @@ export default function Home() {
         )}
       </div>}
     </div>
-  )
+    </>)
 }

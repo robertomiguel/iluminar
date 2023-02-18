@@ -1,6 +1,29 @@
 import Head from 'next/head'
 import React from 'react'
 
+interface CircleButtonProps {
+  label: string
+  onClick: () => void
+}
+
+const CircleButton = ({label, onClick}: CircleButtonProps) => <div style={{
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+  background: 'white',
+  color: 'black',
+  width: '80px',
+  height: '80px',
+  cursor: 'pointer',
+  border: '1px solid black',
+  borderRadius: '50px'}} onClick={ e => {
+    e.preventDefault()
+    e.stopPropagation()
+    onClick()    
+  }} >
+  {label}
+</div>
+
 export default function Home() {
 
   const [ rgb, setRgb ] = React.useState<string>('rgb(0, 0, 0)')
@@ -52,6 +75,12 @@ export default function Home() {
         }} >
           Foto Arte
         </div>
+
+        
+        {showColorList && <CircleButton label="Blanco" onClick={() => setRgb('rgb(255, 255, 255)')} />}
+        {showColorList && <CircleButton label="Rojo" onClick={() => setRgb('rgb(255, 0, 0)')} />}
+        {showColorList && <CircleButton label="Verde" onClick={() => setRgb('rgb(0, 155, 0)')} />}
+        {showColorList && <CircleButton label="Azul" onClick={() => setRgb('rgb(0, 0, 255)')} />}
 
         {showColorList && <div style={{
             display: 'flex',

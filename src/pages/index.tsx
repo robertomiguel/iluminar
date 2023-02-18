@@ -25,38 +25,68 @@ export default function Home() {
       padding: 0,
     }} onClick={() => !showColorList ? switchColor() : setShowColorList(false) } >
       <div style={{
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center',
-          background: showColorList ? 'white' : 'black',
-          color: showColorList ? 'black' : 'white',
-          width: '100px',
-          height: '100px',
-          cursor: 'pointer',
-          borderRadius: '50px'}} onClick={ e => {
-        e.preventDefault()
-        e.stopPropagation()
-        setShowColorList(prev => !prev)
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'space-between',
       }} >
-        Foto Arte
+        <div style={{
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            background: showColorList ? 'white' : 'black',
+            color: showColorList ? 'black' : 'white',
+            width: '100px',
+            height: '100px',
+            cursor: 'pointer',
+            borderRadius: '50px'}} onClick={ e => {
+          e.preventDefault()
+          e.stopPropagation()
+          setShowColorList(prev => !prev)
+        }} >
+          Foto Arte
+        </div>
+
+        {showColorList && <div style={{
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            background: 'blue',
+            color: 'white',
+            width: '100px',
+            height: '100px',
+            cursor: 'pointer',
+            borderRadius: '50px'}} onClick={ e => {
+          e.preventDefault()
+          e.stopPropagation()
+          if (!document.fullscreenElement) {
+            document.documentElement.requestFullscreen();
+          } else {
+            if (document.exitFullscreen) {
+              document.exitFullscreen();
+            }
+          }
+        }} >
+          Expandir
+        </div>}
+
+        {showColorList && <div style={{
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            background: 'red',
+            color: 'white',
+            width: '100px',
+            height: '100px',
+            cursor: 'pointer',
+            borderRadius: '50px'}} onClick={ e => {
+          e.preventDefault()
+          e.stopPropagation()
+          setColorList([])
+          setShowColorList(false)
+        }} >
+          Limpiar
+        </div>}
       </div>
-      {showColorList && <div style={{
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center',
-          background: 'red',
-          color: 'white',
-          width: '100px',
-          height: '100px',
-          cursor: 'pointer',
-          borderRadius: '50px'}} onClick={ e => {
-        e.preventDefault()
-        e.stopPropagation()
-        setColorList([])
-        setShowColorList(false)
-      }} >
-        Limpiar
-      </div>}
       {showColorList && <div style={{background: 'white'}} onClick={ e => e.stopPropagation() } >
         { colorList.map(
           (rgbColor) => <div

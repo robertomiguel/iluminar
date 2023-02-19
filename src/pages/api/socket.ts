@@ -24,10 +24,10 @@ export default function handler(
     res.socket.server.io = io
 
     io.on('connection', (socket) => {
-      socket.on('pantalla', (data) => {
+      socket.on('pantalla', (data: string) => {
         io.emit('pantalla', data);
       });
-      socket.on('control', (data) => {
+      socket.on('control', (data: string) => {
         io.emit('control', data);
       });
     });    

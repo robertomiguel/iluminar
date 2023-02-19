@@ -1,8 +1,7 @@
 import { CircleButton } from '@/components/CircleButton'
 import Head from 'next/head'
 import React from 'react'
-import { Socket } from 'socket.io'
-import io from 'Socket.IO-client'
+import io from 'socket.io-client'
 
 export default function Home() {
 

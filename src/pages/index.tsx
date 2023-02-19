@@ -1,31 +1,12 @@
+import { CircleButton } from '@/components/CircleButton'
 import Head from 'next/head'
 import React from 'react'
-
-interface CircleButtonProps {
-  label: string
-  onClick: () => void
-}
-
-const CircleButton = ({label, onClick}: CircleButtonProps) => <div style={{
-  display: 'flex',
-  justifyContent: 'center',
-  alignItems: 'center',
-  background: 'white',
-  color: 'black',
-  width: '80px',
-  height: '80px',
-  cursor: 'pointer',
-  border: '1px solid black',
-  borderRadius: '50px'}} onClick={ e => {
-    e.preventDefault()
-    e.stopPropagation()
-    onClick()    
-  }} >
-  {label}
-</div>
+import io from 'Socket.IO-client'
 
 export default function Home() {
 
+  const [ socket, setSocket ] = React.useState<any>(null)
+  const [ title, setTitle ] = React.useState<string>('Foto Arte')
   const [ rgb, setRgb ] = React.useState<string>('rgb(0, 0, 0)')
   const [ colorList, setColorList ] = React.useState<string[]>([])
   const [ showColorList, setShowColorList ] = React.useState<boolean>(false)
@@ -33,14 +14,48 @@ export default function Home() {
 
   const switchColor = () => {
     const newColor = `rgb(${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)})`
-    setRgb(newColor)
     setColorList([...colorList, newColor])
+    sendData(newColor)
   }
+
+  React.useEffect( () => {
+    document.addEventListener("contextmenu", (event) => {
+      event.preventDefault()
+    });
+  },[])
+
+  const socketInitializer: any = async () => {
+    await fetch('/api/socket')
+    const st = io()
+    setSocket(st)
+    st.on('connect', () => {
+      setTitle('Foto Arte - (online)')
+    })
+    st.on('disconnect', () => {
+      setTitle('Foto Arte - (offline)')
+    })
+  }
+
+  React.useEffect(() => {
+    socketInitializer()
+  }, [])
+
+  const sendData = (data: string) => socket.emit('pantalla', data)
+
+  React.useEffect(() => {
+    if (!socket) return
+      socket.on('pantalla', (value: string) => {
+      setRgb(value)
+    });
+    return () => {
+      socket.off('pantalla')
+    };
+  }, [socket])
 
   return (
     <>
       <Head>
-        <title>Foto Arte</title>
+        <title>{title}</title>
         <meta name="apple-mobile-web-app-capable" content="yes" />
       </Head>
     <div style={{

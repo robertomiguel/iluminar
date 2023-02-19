@@ -19,7 +19,6 @@ export default function handler(
   res: NextApiResponseWithSocket
 ) {
   if (!res?.socket?.server?.io) {
-    console.log('Socket iniciando')
     const io = new IOServer(res?.socket?.server)
     res.socket.server.io = io
 

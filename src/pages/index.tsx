@@ -1,35 +1,11 @@
 import { ColorFill } from '@/components/ColorFill'
+import { PageProps } from '@/type/global'
 import Head from 'next/head'
 import React from 'react'
-import io from 'socket.io-client'
 
-export default function Home() {
+export default function Home({ socket, title}: PageProps ) {
 
-  const [ socket, setSocket ] = React.useState<any>(null)
-  const [ title, setTitle ] = React.useState<string>('Foto Arte')
   const [ socketData, setSocketData ] = React.useState<string>('')
-
-  React.useEffect( () => {
-    document.addEventListener("contextmenu", (event) => {
-      event.preventDefault()
-    });
-  },[])
-
-  const socketInitializer: any = async () => {
-    await fetch('/api/socket')
-    const st = io()
-    setSocket(st)
-    st.on('connect', () => {
-      setTitle('Foto Arte - (online)')
-    })
-    st.on('disconnect', () => {
-      setTitle('Foto Arte - (offline)')
-    })
-  }
-
-  React.useEffect(() => {
-    socketInitializer()
-  }, [])
 
   const sendData = (data: string) => socket.emit('pantalla', data)
 

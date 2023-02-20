@@ -49,7 +49,7 @@ export const Switch = ({checked, label, onChange}: SwitchProps) => {
             overflow: 'hidden',
             width: '80px'
         }}>
-            <div style={BOX} onClick={ e => {
+            <div aria-label='sw-button' style={BOX} onClick={ e => {
                 e.stopPropagation()
                 setCheck(!check)
                 onChange && onChange(!check)

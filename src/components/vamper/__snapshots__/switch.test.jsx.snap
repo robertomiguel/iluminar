@@ -1,0 +1,23 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Prueba del Switch match con snapshot 1`] = `
+<div>
+  <div
+    style="text-align: center; display: flex; flex-direction: column; align-content: center; justify-content: center; align-items: center; gap: 1px;"
+  >
+    <div
+      style="color: white; font-size: 16px; letter-spacing: 2px; background: black; padding: 5px; border-radius: 7px;"
+    />
+    <div
+      style="display: flex; background: black; color: gray; border: 1px solid yellow; border-radius: 15px; overflow: hidden; width: 80px;"
+    >
+      <div
+        aria-label="sw-button"
+        style="display: flex; justify-content: center; align-items: center; width: 80px; height: 30px; cursor: pointer;"
+      >
+        NO
+      </div>
+    </div>
+  </div>
+</div>
+`;

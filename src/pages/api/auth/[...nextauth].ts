@@ -43,8 +43,7 @@ export default NextAuth({
             }
             return token
         },
-        async session({token, session, user}) {
-            /// console.log({token, session, user});
+        async session({token, session, user}): Promise<any> {
             const newSession = {
                 ...session,
                 accessToken: token?.accessToken,

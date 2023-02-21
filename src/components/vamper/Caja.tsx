@@ -15,6 +15,7 @@ interface CajaProps extends PropsWithChildren<any> {
     bottom?: string
     position?: 'absolute' | 'relative' | 'fixed' | 'static' | 'sticky',
     padding?: string,
+    center?: boolean,
 }
 
 export const Caja = (props: CajaProps): ReactElement => {
@@ -32,7 +33,7 @@ export const Caja = (props: CajaProps): ReactElement => {
         display: 'flex',
         gap: props?.gap,
         flexDirection: props?.vertical ? 'column' : 'row',
-        justifyContent: props?.gap ? undefined : 'space-between',
+        justifyContent: props?.gap ? undefined : props?.center ? 'center' : 'space-between',
         alignItems: 'center',
         padding: props?.padding,
     }} >{props?.children}</div>

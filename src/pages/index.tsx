@@ -1,23 +1,14 @@
-import { ColorFill } from '@/components/ColorFill'
+import { Button } from '@/components/vamper/Button'
+import { Caja } from '@/components/vamper/Caja'
 import { PageProps } from '@/type/global'
+import { useSession } from 'next-auth/react'
 import Head from 'next/head'
+import { useRouter } from 'next/router'
 import React from 'react'
 
 export default function Home({ socket, title}: PageProps ) {
 
-  const [ socketData, setSocketData ] = React.useState<string>('')
-
-  const sendData = (data: string) => socket.emit('pantalla', data)
-
-  React.useEffect(() => {
-    if (!socket) return
-      socket.on('pantalla', (value: string) => {
-      setSocketData(value)
-    });
-    return () => {
-      socket.off('pantalla')
-    };
-  }, [socket])
+  const router = useRouter()
 
   return (
     <>
@@ -25,6 +16,13 @@ export default function Home({ socket, title}: PageProps ) {
         <title>{title}</title>
         <meta name="apple-mobile-web-app-capable" content="yes" />
       </Head>
-      <ColorFill sendData={sendData} socketData={socketData} />
+      <Caja vertical center color='orange' gap='10px' >
+        <h1>iluminador</h1>
+        <Button label="Control" onClick={() => router.push('/control')} />
+        <Button label="Pantalla" onClick={() => router.push('/pantalla')} />
+        <Button label="ColorFill" onClick={() => router.push('/colorfill')} />
+        <h6>powered by Roberto</h6>
+      </Caja>
+
     </>)
 }

@@ -19,14 +19,15 @@ export default function handler(
   res: NextApiResponseWithSocket
 ) {
   if (!res?.socket?.server?.io) {
+    console.log('Iniciando conexión a socket')
     const io = new IOServer(res?.socket?.server)
     res.socket.server.io = io
 
-    io.on('connection', (socket) => {
-      socket.on('pantalla', (data: string) => {
+    io.on('connection', (sockete) => {
+      sockete.on('pantalla', (data: string) => {
         io.emit('pantalla', data);
       });
-      socket.on('control', (data: string) => {
+      sockete.on('control', (data: string) => {
         io.emit('control', data);
       });
     });    

@@ -1,5 +1,5 @@
 interface ButtonProps {
-    label: string
+    label?: string
     onClick?: () => void
     circle?: boolean,
     color?: string,
@@ -9,7 +9,16 @@ interface ButtonProps {
     isDisabled?: boolean,
   }
   
-export const Button = ({label, color, background, w, h, isDisabled, circle, onClick}: ButtonProps) => <div style={{
+export const Button = ({
+    label,
+    color,
+    background,
+    w,
+    h,
+    isDisabled,
+    circle,
+    onClick
+}: ButtonProps) => <div style={{
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
@@ -29,6 +38,6 @@ export const Button = ({label, color, background, w, h, isDisabled, circle, onCl
         e.stopPropagation()
         onClick && onClick()
     }} >
-    {label}
+    {label || 'Botón'}
 </div>
   

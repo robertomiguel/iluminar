@@ -1,7 +1,9 @@
+import { AuthProvider } from '@/context'
 import type { AppProps } from 'next/app'
 import React from 'react'
 import io from 'socket.io-client'
 import '../style/global.css'
+import { SessionProvider } from "next-auth/react"
 
 export default function App({ Component, pageProps }: AppProps) {
 
@@ -19,9 +21,13 @@ export default function App({ Component, pageProps }: AppProps) {
       setTitle('Foto Arte - (offline)')
     })
   }
+  const mongoInitializer: any = async () => {
+    await fetch('/api/mongo')
+  }
 
   React.useEffect(() => {
     socketInitializer()
+    mongoInitializer()
   }, [])
 
   React.useEffect( () => {
@@ -30,5 +36,9 @@ export default function App({ Component, pageProps }: AppProps) {
     });
   },[])
 
-  return <Component {...{...pageProps, socket, title}} />
+  return <SessionProvider>
+      <AuthProvider>
+        <Component {...{...pageProps, socket, title}} />
+      </AuthProvider>
+  </SessionProvider>
 }

@@ -1,17 +1,21 @@
 import { Caja } from '@/components/vamper/Caja'
 import { Slider } from '@/components/vamper/Slider'
 import { Switch } from '@/components/vamper/Switch'
+import { AuthContext } from '@/context'
 import { PageProps } from '@/type/global'
 import { PantallaEstilo } from '@/type/pantallaEstilo'
 import Head from 'next/head'
-import React from 'react'
+import { useRouter } from 'next/router'
+import React, { useContext } from 'react'
 
 export default function Control({ socket, title}: PageProps ) {
 
-  const sendData = (data: any) => socket.emit('pantalla', data)
+  // const sendData = (data: any) => socket.emit('pantalla', data)
+  const { logoutUser, isLoggedIn } = useContext(AuthContext)
+  const router = useRouter()
 
   const [ config, setConfig ] = React.useState<PantallaEstilo>({
-        mostrarLineas: true,
+        mostrarLineas: false,
         lineasVerticales: 20,
         lineasAnchoVerticales: 2,
         rotarLineaVertical: 0,
@@ -28,6 +32,16 @@ export default function Control({ socket, title}: PageProps ) {
   React.useEffect(()=>{
     socket && socket.emit('pantalla', config)
   },[socket, config])
+
+  React.useEffect(() => {
+    if (!socket) return
+    socket.on('control', (value: string) => {
+      if (value === 'logout') logoutUser()
+    });
+    return () => {
+      socket.off('control')
+    };
+  }, [socket, logoutUser])
 
   return (
     <>
@@ -49,6 +63,16 @@ export default function Control({ socket, title}: PageProps ) {
             <Switch checked={config?.lineasSpin} label='Rotar' onChange={ v => updateConfig('lineasSpin', v) } />
             <Switch checked={config?.lineasDos} label='Dos Lineas' onChange={ v => updateConfig('lineasDos', v) } />
             <Switch checked={config?.cambiarVerticalHorizontal} label='Cambiar a Vertical' onChange={ v => updateConfig('cambiarVerticalHorizontal', v) } />
+        </Caja>
+        <Caja>
+          {isLoggedIn &&
+            <button onClick={()=>{
+              socket && socket.emit('control', 'logout')
+            }} >Salir</button>
+          }
+          {!isLoggedIn &&
+            <button>Acceder</button>
+          }
         </Caja>
       </div>
     </>)

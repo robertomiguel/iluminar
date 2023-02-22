@@ -53,10 +53,10 @@ export const ColorFill = ({ sendData, socketData }: SendData ) => {
           </div>
   
           
-          {showColorList && <Button label="Blanco" onClick={() => setRgb('rgb(255, 255, 255)')} />}
-          {showColorList && <Button label="Rojo" onClick={() => setRgb('rgb(255, 0, 0)')} />}
-          {showColorList && <Button label="Verde" onClick={() => setRgb('rgb(0, 155, 0)')} />}
-          {showColorList && <Button label="Azul" onClick={() => setRgb('rgb(0, 0, 255)')} />}
+          {showColorList && <Button circle label="Blanco" background='white' color='black' onClick={() => setRgb('rgb(255, 255, 255)')} />}
+          {showColorList && <Button circle label="Rojo" background='red' onClick={() => setRgb('rgb(255, 0, 0)')} />}
+          {showColorList && <Button circle label="Verde" background='green' onClick={() => setRgb('rgb(0, 155, 0)')} />}
+          {showColorList && <Button circle label="Azul" background='blue' onClick={() => setRgb('rgb(0, 0, 255)')} />}
   
           {showColorList && <div style={{
               display: 'flex',

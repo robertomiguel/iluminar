@@ -28,28 +28,15 @@ export default NextAuth({
         updateAge: 60 * 60 * 24, // 24 hours
     },
     callbacks: {
-        async jwt({token, account, user}) {
-            /// console.log({token, account, user});
-            token.accessToken = account?.access_token
-            switch (account?.provider) {
-                case 'credentials':
-                    token = {
-                        ...token,
-                        user
-                    }
-                    break
-                default:
-                    break
-            }
+        async jwt({token, account}) {
+            if (account) {
+                token.accessToken = account.access_token
+              }
             return token
         },
-        async session({token, session, user}): Promise<any> {
-            const newSession = {
-                ...session,
-                accessToken: token?.accessToken,
-                user: token?.user
-            }
-            return newSession
+        async session({token, session}) {
+            Object.assign(session, {accessToken: token.accessToken} )
+            return session
         }
     }
 

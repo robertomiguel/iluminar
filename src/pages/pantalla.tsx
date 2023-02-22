@@ -1,11 +1,9 @@
-import React, { useContext } from 'react'
+import React from 'react'
 import Head from 'next/head'
 import { PageProps } from '@/type/global';
 import { PantallaEstilo } from '@/type/pantallaEstilo';
 import { Lineas } from '@/components/pantalla/lineas';
-import { AuthContext } from '@/context';
 import { useRouter } from 'next/router';
-
 
 export default function Pantalla({ socket, title}: PageProps ) {
 

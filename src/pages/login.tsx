@@ -28,20 +28,6 @@ export default function Login({ socket }: PageProps) {
         e.preventDefault()
         e.stopPropagation()
         await signIn('credentials', { email, password })
-        /* try {
-            const res = await checkAuth()
-            if (res === true) {
-                socket.emit('control', 'logged')
-                return
-            }
-            const res2 = await loginUser(email, password)
-            if (res2 === true) {
-                socket.emit('control', 'logged')
-                // router.replace(router.query.redirect?.toString() || '/')
-            }
-        } catch (error) {
-            console.log('error: ', error)
-        } */
     }
 
     return (<>

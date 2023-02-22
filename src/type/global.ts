@@ -1,6 +1,6 @@
 
 export interface PageProps {
-    socket: any, title: string
+    socket: any, title?: string
   }
   
 export interface SendData {

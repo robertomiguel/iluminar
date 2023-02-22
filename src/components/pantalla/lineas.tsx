@@ -31,7 +31,7 @@ export const Lineas = ({pantalla}: PantallaComponenteProps) => {
     ...pantalla?.lineasVerticalesEstilo
   }} >
     {
-        [...Array(pantalla?.lineasVerticales)].map((_, i) => 
+        [...Array(pantalla?.lineasVerticales)].map((i) => 
             <div
               style={{
                 borderColor: pantalla?.lineaMultiColor ? 'blue' : undefined,
@@ -58,7 +58,7 @@ export const Lineas = ({pantalla}: PantallaComponenteProps) => {
     ...pantalla?.lineasVerticalesEstilo
   }} >
     {pantalla?.lineasDos && Boolean(rotar + Number(pantalla.rotarLineaVertical)||0) &&
-        [...Array(pantalla?.lineasVerticales)].map((_, i) => 
+        [...Array(pantalla?.lineasVerticales)].map((i) => 
             <div
               style={{
                 borderColor: pantalla?.lineaMultiColor ? 'blue' : undefined,

@@ -1,7 +1,5 @@
 import { PropsWithChildren, ReactElement } from "react"
 
-// interface Estilos extends React.CSSProperties {}
-
 interface CajaProps extends PropsWithChildren<any> {
     vertical?: boolean
     w?: string

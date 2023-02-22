@@ -15,7 +15,6 @@ export async function middleware(request: NextRequest) {
 
       return NextResponse.redirect(url)
 
-        // return NextResponse.redirect(new URL(`/api/auth/signin?p=${request.nextUrl.pathname}`, request.url))
     }
     return NextResponse.next()
 }

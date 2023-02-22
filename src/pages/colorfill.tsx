@@ -10,10 +10,7 @@ export default function Color({ socket, title}: PageProps ) {
   const sendData = (data: string) => socket.emit('pantalla', data)
 
   React.useEffect(() => {
-    if (!socket) return
-      socket.on('pantalla', (value: string) => {
-      setSocketData(value)
-    });
+      socket && socket.on('pantalla', (value: string) => setSocketData(value) );
     return () => {
       socket.off('pantalla')
     };

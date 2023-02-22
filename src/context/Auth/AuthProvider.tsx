@@ -2,16 +2,16 @@ import { User } from '@/type/global'
 import { FC, useReducer, PropsWithChildren, useEffect } from 'react'
 import { AuthContext } from './AuthContext'
 import { authReducer } from './authReducer'
-import { useRouter } from 'next/router'
 import { useSession, signOut } from 'next-auth/react'
 
 export interface AuthState {
     isLoggedIn: boolean
     user?: User
+    logoutUser?: () => void
 }
 
 interface Props {
-    children?: React.ReactNode | undefined,
+    children: React.ReactNode | undefined,
 }
 
 const AUTH_INITIAL_STATE: AuthState = {
@@ -21,7 +21,6 @@ const AUTH_INITIAL_STATE: AuthState = {
 
 export const AuthProvider:FC<PropsWithChildren<Props>> = ({ children  }) => {
     const [state, dispatch] = useReducer(authReducer, AUTH_INITIAL_STATE)
-    const router = useRouter()
     
     const { data, status} = useSession()
 
@@ -32,6 +31,7 @@ export const AuthProvider:FC<PropsWithChildren<Props>> = ({ children  }) => {
                 payload: {
                     isLoggedIn: true,
                     user: data.user as User,
+                    logoutUser: () => signOut()
                 },
             })
         } else {
@@ -41,12 +41,8 @@ export const AuthProvider:FC<PropsWithChildren<Props>> = ({ children  }) => {
         }   
     }, [data, status])
 
-    const logoutUser = () => {
-        signOut()
-    }
-
     return (
-        <AuthContext.Provider value={{ ...state, logoutUser }}>
+        <AuthContext.Provider value={state}>
             {children}
         </AuthContext.Provider>
     )

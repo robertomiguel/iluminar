@@ -1,14 +1,16 @@
+import React, { useContext } from 'react'
 import { Button } from '@/components/vamper/Button'
 import { Caja } from '@/components/vamper/Caja'
 import { PageProps } from '@/type/global'
-import { useSession } from 'next-auth/react'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
-import React from 'react'
+import { AuthContext } from '@/context'
 
-export default function Home({ socket, title}: PageProps ) {
+export default function Home({ title}: PageProps ) {
 
   const router = useRouter()
+
+  const context = useContext(AuthContext)
 
   return (
     <>
@@ -17,6 +19,14 @@ export default function Home({ socket, title}: PageProps ) {
         <meta name="apple-mobile-web-app-capable" content="yes" />
       </Head>
       <Caja vertical center color='orange' gap='10px' >
+        <Caja>
+          {context?.isLoggedIn && <div>{context?.user?.name}
+            <a href="#" style={{color: 'orange', marginLeft: '16px'}} onClick={ e => {
+              e.preventDefault()
+              context?.logoutUser()
+            }} >Salir</a>
+          </div>}
+        </Caja>
         <h1>iluminador</h1>
         <Button label="Control" onClick={() => router.push('/control')} />
         <Button label="Pantalla" onClick={() => router.push('/pantalla')} />

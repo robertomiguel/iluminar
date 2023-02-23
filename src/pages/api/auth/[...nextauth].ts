@@ -37,7 +37,15 @@ export default NextAuth({
         async session({token, session}) {
             Object.assign(session, {accessToken: token.accessToken} )
             return session
-        }
+        },
+        async redirect({ url, baseUrl }) {
+            const params = url.split('?')
+            const urlParams = new URLSearchParams(params[1])
+            if (urlParams.has('p')) {
+                return `${baseUrl}${urlParams.get('p')}`
+            }
+            return url
+        },
     }
 
 })

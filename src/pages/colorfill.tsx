@@ -12,7 +12,7 @@ export default function Color({ socket, title}: PageProps ) {
   React.useEffect(() => {
       socket && socket.on('pantalla', (value: string) => setSocketData(value) );
     return () => {
-      socket.off('pantalla')
+      socket && socket.off('pantalla')
     };
   }, [socket])
 

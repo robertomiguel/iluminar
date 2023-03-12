@@ -69,43 +69,54 @@ export default function Draw({ socket }: PageProps) {
     useEffect(() => {
         const canvas = canvasRef.current;
         const ctx = canvas?.getContext('2d');
-
+      
         if (ctx && canvas) {
-        canvas.addEventListener('mousedown', startDrawing);
-        canvas.addEventListener('mousemove', draw);
-        canvas.addEventListener('mouseup', stopDrawing);
-        canvas.addEventListener('mouseout', stopDrawing);
-
-        return () => {
-            canvas.removeEventListener('mousedown', startDrawing);
-            canvas.removeEventListener('mousemove', draw);
-            canvas.removeEventListener('mouseup', stopDrawing);
-            canvas.removeEventListener('mouseout', stopDrawing);
-        };
+            canvas.addEventListener('mousedown', startDrawing);
+            canvas.addEventListener('mousemove', draw);
+            canvas.addEventListener('mouseup', stopDrawing);
+            canvas.addEventListener('mouseout', stopDrawing);
+          
+            canvas.addEventListener('touchstart', startDrawing);
+            canvas.addEventListener('touchmove', draw);
+            canvas.addEventListener('touchend', stopDrawing);
+            canvas.addEventListener('touchcancel', stopDrawing);
+          
+            return () => {
+              canvas.removeEventListener('mousedown', startDrawing);
+              canvas.removeEventListener('mousemove', draw);
+              canvas.removeEventListener('mouseup', stopDrawing);
+              canvas.removeEventListener('mouseout', stopDrawing);
+          
+              canvas.removeEventListener('touchstart', startDrawing);
+              canvas.removeEventListener('touchmove', draw);
+              canvas.removeEventListener('touchend', stopDrawing);
+              canvas.removeEventListener('touchcancel', stopDrawing);
+            };
         }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [ancho, color]);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+      }, [ancho, color]);
 
-    const startDrawing = (e: MouseEvent) => {
-        const canvas = canvasRef.current;
-        const ctx = canvas?.getContext('2d');
-
-        if (ctx) {
-        const x = e.offsetX;
-        const y = e.offsetY;
-
-        prevPosRef.current = { x, y };
-        isDrawingRef.current = true;
-        }
-    };
-
-    const draw = (e: MouseEvent) => {
+      const startDrawing = (e: MouseEvent | TouchEvent) => {
         const canvas = canvasRef.current;
         const ctx = canvas?.getContext('2d');
       
-        if (ctx && isDrawingRef.current) {
-          const x = e.offsetX;
-          const y = e.offsetY;
+        if (ctx && canvas) {
+          const x = e instanceof MouseEvent ? e.offsetX : e.changedTouches[0].pageX - canvas?.offsetLeft;
+          const y = e instanceof MouseEvent ? e.offsetY : e.changedTouches[0].pageY - canvas?.offsetTop;
+      
+          prevPosRef.current = { x, y };
+          isDrawingRef.current = true;
+        }
+      };
+      
+
+      const draw = (e: MouseEvent | TouchEvent) => {
+        const canvas = canvasRef.current;
+        const ctx = canvas?.getContext('2d');
+      
+        if (ctx && isDrawingRef.current && canvas) {
+          const x = e instanceof MouseEvent ? e.offsetX : e.changedTouches[0].pageX - canvas?.offsetLeft;
+          const y = e instanceof MouseEvent ? e.offsetY : e.changedTouches[0].pageY - canvas?.offsetTop;
           const prevPos = prevPosRef.current;
       
           if (prevPos) {
@@ -122,6 +133,7 @@ export default function Draw({ socket }: PageProps) {
           }
         }
       };
+
   const stopDrawing = () => {
     isDrawingRef.current = false;
     prevPosRef.current = null;

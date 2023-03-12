@@ -5,11 +5,10 @@ export interface PantallaEstilo {
     rgb?: string
 
     mostrarLineas?: boolean
-
     rotarSpeed?: number
     lineasSpin?: boolean
-    cambiarVerticalHorizontal: boolean
-    lineaMultiColor: boolean
+    cambiarVerticalHorizontal?: boolean
+    lineaMultiColor?: boolean
     lineasAnchoVerticales?: number
     lineasDos?: boolean
     lineasVerticales?: number
@@ -17,4 +16,6 @@ export interface PantallaEstilo {
     lineaVerticalColor?: string
     rotarLineaVertical?: number
 
+    mostrarCanvas?: boolean
+    imagen?: any
 }

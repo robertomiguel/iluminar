@@ -29,8 +29,9 @@ export default function Home({ title}: PageProps ) {
         </Caja>
         <h1>iluminador</h1>
         <Button label="Control" onClick={() => router.push('/control')} />
-        <Button label="Pantalla" onClick={() => router.push('/pantalla')} />
+        <Button label="Pantalla" onClick={() => window.open('/pantalla', '_blank')} />
         <Button label="ColorFill" onClick={() => router.push('/colorfill')} />
+        <Button label="Draw me!" onClick={() => router.push('/drawoverme')} />
         <h6>powered by Roberto</h6>
       </Caja>
 

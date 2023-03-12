@@ -4,6 +4,7 @@ import { PageProps } from '@/type/global';
 import { PantallaEstilo } from '@/type/pantallaEstilo';
 import { Lineas } from '@/components/pantalla/lineas';
 import { useRouter } from 'next/router';
+import { Draw } from '@/components/pantalla/draw';
 
 export default function Pantalla({ socket, title}: PageProps ) {
 
@@ -30,7 +31,8 @@ export default function Pantalla({ socket, title}: PageProps ) {
           <meta name="apple-mobile-web-app-capable" content="yes" />
         </Head>
         <div>
-            {socketData?.mostrarLineas && <Lineas pantalla={socketData} /> }
+            {socketData?.mostrarLineas && <Lineas pantalla={socketData} />}
+            {socketData?.mostrarCanvas && <Draw pantalla={socketData} />}
         </div>
     </>)
 }
